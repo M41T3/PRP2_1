@@ -1,8 +1,10 @@
 #define _CRT_SECURE_NO_WARNINGS
+#define MAX 100		//define max lenght of command string
+
 #include <stdio.h>
 #include <string.h>
-#define MAX 100
 
+// Prototypes:
 void init_playground(char playground[8][8]);
 void print_playground(char playground[8][8]);
 void play_str(char playground[8][8], char partie_copy[MAX]);
@@ -12,7 +14,7 @@ void play_input(char playground[8][8]);
 
 int main(void) {
 	
-	char partie[MAX] = "e2-e4/e7-e5/Sg1-f3/Sb8-c6/Lf1-c4/Lf8-c5/Sf3xe5/Sc6xe5/De1-e3/Lc5-e3/";	// Partie String
+	char partie[MAX] = "e2-e4/e7-e5/Sg1-f3/Sb8-c6/Lf1-c4/Lf8-c5/Sf3xe5/Sc6xe5/De1-e3/Lc5-e3/";	// given partie string
 	char partie_copy[MAX];
 	strcpy(partie_copy, partie);	// Create copy for strtok
 
@@ -24,18 +26,19 @@ int main(void) {
 	printf("Die Zuege sind beginnend mit weiss abwechselt notiert.\nDie weissen Figuren im Spielfeld mit Grossbuchstaben bezeichnet.\n");
 
 
-	//Initialize playground array
+	//Initialize playground array and print it to console
 	char playground[8][8];
 	init_playground(playground);
 	print_playground(playground);
 
-	play_str(playground, partie_copy);
+	play_str(playground, partie_copy);	// play the commands from the string 
 	
-	char flag = 'N';
+	char flag = 'N';	
 	printf("Wollen Sie die Partie weiterspielen? [J/N]:");
 	scanf("%c", &flag);
-	if(flag == 'j' || flag == 'J') play_input(playground);
+	if(flag == 'j' || flag == 'J') play_input(playground);	// check if user wants to play further
 	
+	printf("\nSpiel beendet.\n");
 
 	system("PAUSE");
 	return 1;
@@ -44,6 +47,18 @@ int main(void) {
 // ---------------------------------------------------------------------------------------------------------------
 
 void init_playground(char playground[8][8]) {
+	/*
+		Function initializes playground array:
+		
+	  { { 'T','S','L','K','D','L','S','T' },
+		{ 'B','B','B','B','B','B','B','B' },
+		{ ' ',177,' ',177,' ',177,' ',177 },
+		{ 177,' ',177,' ',177,' ',177,' ' },
+		{ ' ',177,' ',177,' ',177,' ',177 },
+		{ 177,' ',177,' ',177,' ',177,' ' },
+		{ 't','s','l','k','d','l','s','t' },
+		{ 'b','b','b','b','b','b','b','b' } };
+	*/
 	
 	playground[0][0] = 'T';
 	playground[0][1] = 'S';
@@ -80,25 +95,15 @@ void init_playground(char playground[8][8]) {
 			else playground[i][j] = 177;
 		}
 	}
-
-
-
-	/*
-	 playground[][] = { { 'T','S','L','K','D','L','S','T' },
-						{ 'B','B','B','B','B','B','B','B' },
-						{ ' ',177,' ',177,' ',177,' ',177 },
-						{ 177,' ',177,' ',177,' ',177,' ' }, 
-						{ ' ',177,' ',177,' ',177,' ',177 },
-						{ 177,' ',177,' ',177,' ',177,' ' },
-						{ 't','s','l','k','d','l','s','t' },
-						{ 'b','b','b','b','b','b','b','b' } };
-	 */
 }
 
 // ---------------------------------------------------------------------------------------------------------------
 
 void print_playground(char playground[8][8]) {
-
+	/*
+	Function prints the playground to the console.
+	*/
+	
 	printf("\nSpielbrett\n    |\n");
 	for (int i = 7; i >= 0; i--) {
 		printf("  %i | %c %c %c %c %c %c %c %c \n",i+1, playground[i][0], playground[i][1], playground[i][2], playground[i][3], playground[i][4], playground[i][5], playground[i][6], playground[i][7]);
@@ -109,6 +114,10 @@ void print_playground(char playground[8][8]) {
 // ---------------------------------------------------------------------------------------------------------------
 
 void play_str(char playground[8][8], char partie_copy[MAX]) {
+	/*
+	Function, which handles the commands of the given string.
+	*/
+
 
 	char delimiter[] = "/";	// set delimiter
 	char* token_ptr = strtok(partie_copy, delimiter);		// Create pointer, which points on the beginning of each word https://tech.io/playgrounds/14213/how-to-play-with-strings-in-c/string-split
@@ -116,21 +125,20 @@ void play_str(char playground[8][8], char partie_copy[MAX]) {
 	int counter = 1;
 	int play_flag = 1;
 
-	while (token_ptr != 0) {
+	while (token_ptr != 0) {	// While a command is available
 
-		system("PAUSE"); //DEBUG
+		system("PAUSE"); // Wait untill the user presses return to continue
 
-		printf("%i.Zug: %s\n",counter, token_ptr);
-		printf("Test: %i", strlen(token_ptr));	//DEBUG
+		printf("\n%i.Zug: %s\n",counter, token_ptr);	// Print current command
 		
-		if (strlen(token_ptr) == 5) {
-			if (token_ptr[2] == '-') {
+		if (strlen(token_ptr) == 5) {	// Check the length of the command
+			if (token_ptr[2] == '-') {	// differentiate if it's "Setzzug" or "Schlagzug"
 				printf("Dieser Zug ist ein Setzzug:\n");
 			}
 			else {
 				printf("Dieser Zug ist ein Schlagzug:\n");
 			}
-			update_playground(counter, playground, 'B', token_ptr[0], token_ptr[1], token_ptr[3], token_ptr[4]);
+			update_playground(counter, playground, 'B', token_ptr[0], token_ptr[1], token_ptr[3], token_ptr[4]); //Update the playground with the parameters
 		}
 		else if (strlen(token_ptr) == 6) {
 			if (token_ptr[3] == '-') {
@@ -142,32 +150,33 @@ void play_str(char playground[8][8], char partie_copy[MAX]) {
 			update_playground(counter, playground, token_ptr[0], token_ptr[1], token_ptr[2], token_ptr[4], token_ptr[5]);
 		}
 
-		print_playground(playground);
+		print_playground(playground);	// Print updated playground-array to console
 
-		token_ptr = strtok(NULL, delimiter);
-		counter++;
+		token_ptr = strtok(NULL, delimiter); // reset strtok ?
+		counter++;	// Increase counter
 	}
 }
 
 // ---------------------------------------------------------------------------------------------------------------
 
 void update_playground(int counter, char playground[8][8], char figure, char old_x, char old_y, char new_x, char new_y) {
+	/*
+	Function updates the playground-array.
+	*/
+	char fig;	
 
-	char fig = 'F';	//To get failure
-
-	if (figure != 'T' && figure != 'S' && figure != 'L' && figure != 'K' && figure != 'D') { // TODO: unterscheiden klein groß. bug!
-		if (counter % 2 == 1) fig = 'B';
-		else fig = 'b';
+	if (figure != 'T' && figure != 'S' && figure != 'L' && figure != 'K' && figure != 'D') { //  In no figure is given by the command 
+		if (counter % 2 == 1) fig = 'B';	//If counter is even -> uppercase B 
+		else fig = 'b';	//If counter is odd -> b
 		
 	}
-	else {
+	else {										// If figure is given by command
 		if (counter % 2 == 1) fig = figure;
-		else fig = figure + 56; // small character when it's the opposites turn
+		else fig = figure + 32;		// If counter is odd -> get small character by adding 32 to the ascii value
 	}
-	printf("x=%i, y=%i",  (int)new_y-49, mapping(new_x)); // DEBUG 49 because of ascii and extra -1 because it starts at 1
-	playground[(int)new_y - 49][mapping(new_x)] = fig;
+	playground[(int)new_y - 49][mapping(new_x)] = fig;	// Get the current figure of the start-position (-49 because Number is a character and has to be converted to int)
 
-	if ((mapping(old_x) % 2 == 0 && ((int)old_y - 49) % 2 == 0) || (mapping(old_x) % 2 == 1 && ((int)old_y - 49) % 2 == 1)) { // check karo
+	if ((mapping(old_x) % 2 == 0 && ((int)old_y - 49) % 2 == 0) || (mapping(old_x) % 2 == 1 && ((int)old_y - 49) % 2 == 1)) { // check the pattern
 		playground[(int)old_y - 49][mapping(old_x)] = ' ';
 	}
 	else playground[(int)old_y - 49][mapping(old_x)] = 177;
@@ -177,7 +186,11 @@ void update_playground(int counter, char playground[8][8], char figure, char old
 // ---------------------------------------------------------------------------------------------------------------
 
 int mapping(char input) {
-	int v = 22;
+	/*
+	Function maps the characters a to h to its corresponding numbers
+	*/
+	
+	int v;
 
 	switch (input)
 	{
@@ -216,31 +229,36 @@ int mapping(char input) {
 // ---------------------------------------------------------------------------------------------------------------
 
 void play_input(char playground[8][8]) {
-	char old_value[] = " ";
-	char new_value[] = " ";
+	/*
+	Fuction handles user input.
+	*/
+	char old_value[3];	// Create String of length of 3 "XX\0"
+	char new_value[3];	// Create String of length of 3 "XX\0"
 	int counter = 1;
 	char fig;
 	int x, y;
 
-	while (!(old_value[0] == '0' && old_value[1] == '0')) {
+	while (1) {	// Create a loop
 
 		printf("Beenden der Partie durch Eingabe eines 00!\n");
 		printf("Eingabe Ausgangsfeld [SpalteZeile]: ");
 		scanf("%s", old_value);
-		printf("\ntest: %s\n", old_value);	//DEBUG
+		
+		if (old_value[0] == '0' && old_value[1] == '0') return;	// Return to main, if user inputs "00"
+		
 		printf("Eingabe Zielfeld [SpalteZeile]: ");
 		scanf("%s", new_value);
 
-		x = (int)old_value[1] - 49;
-		y = mapping(old_value);
+		x = (int)old_value[1] - 49;	// Get x value by converting the character to int and substract 49 from the ascii value
+		y = mapping(old_value[0]);	// Get y value by mapping the character to its number
 		
-		fig = playground[x][y];		//get selcted figure
+		fig = playground[x][y];		//get selected figure
 
-		update_playground(counter, playground, fig, old_value[0], old_value[1], new_value[0], new_value[1]);
+		update_playground(counter, playground, fig, old_value[0], old_value[1], new_value[0], new_value[1]); // update playground
 
-		print_playground(playground); 
+		print_playground(playground);	// print playground
 
-		counter++;
+		counter++;	// Increase counter
 	}
 
 }
