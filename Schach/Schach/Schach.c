@@ -258,7 +258,7 @@ void play_input(char playground[8][8]) {
 		y = mapping(old_value[0]);	// Get y value by mapping the character to its number
 		
 		fig = playground[x][y];		//get selected figure
-		printf("\Fig:%c\n",fig); // debug
+		
 		update_playground(counter, playground, fig, old_value[0], old_value[1], new_value[0], new_value[1]); // update playground
 
 		print_playground(playground);	// print playground
