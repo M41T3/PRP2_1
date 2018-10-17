@@ -1,3 +1,10 @@
+/*
+PRP2-1 Aufgabe 1.2
+
+Name: Malte Müller
+Datum: 17.10.2018
+*/
+
 #define _CRT_SECURE_NO_WARNINGS
 #define MAX 100		//define max lenght of command string
 
@@ -121,13 +128,14 @@ void play_str(char playground[8][8], char partie_copy[MAX]) {
 
 	char delimiter[] = "/";	// set delimiter
 	char* token_ptr = strtok(partie_copy, delimiter);		// Create pointer, which points on the beginning of each word https://tech.io/playgrounds/14213/how-to-play-with-strings-in-c/string-split
+	char fig = ' ';
 
 	int counter = 1;
 	int play_flag = 1;
 
 	while (token_ptr != 0) {	// While a command is available
 
-		system("PAUSE"); // Wait untill the user presses return to continue
+		system("PAUSE"); // Wait until the user presses 'return' to continue
 
 		printf("\n%i.Zug: %s\n",counter, token_ptr);	// Print current command
 		
@@ -138,7 +146,11 @@ void play_str(char playground[8][8], char partie_copy[MAX]) {
 			else {
 				printf("Dieser Zug ist ein Schlagzug:\n");
 			}
-			update_playground(counter, playground, 'B', token_ptr[0], token_ptr[1], token_ptr[3], token_ptr[4]); //Update the playground with the parameters
+			
+			if (counter % 2 == 1) fig = 'B';
+			else fig = 'b';
+			
+			update_playground(counter, playground, fig, token_ptr[0], token_ptr[1], token_ptr[3], token_ptr[4]);	// update playground
 		}
 		else if (strlen(token_ptr) == 6) {
 			if (token_ptr[3] == '-') {
@@ -147,12 +159,15 @@ void play_str(char playground[8][8], char partie_copy[MAX]) {
 			else {
 				printf("Dieser Zug ist ein Schlagzug:\n");
 			}
-			update_playground(counter, playground, token_ptr[0], token_ptr[1], token_ptr[2], token_ptr[4], token_ptr[5]);
-		}
-
+			if (counter % 2 == 1) fig = token_ptr[0];
+			else fig = token_ptr[0] + 32;		// If counter is odd -> get small character by adding 32 to the ascii value
+			
+			update_playground(counter, playground, fig, token_ptr[1], token_ptr[2], token_ptr[4], token_ptr[5]);	// update playground
+		}	
+	
 		print_playground(playground);	// Print updated playground-array to console
 
-		token_ptr = strtok(NULL, delimiter); // reset strtok ?
+		token_ptr = strtok(NULL, delimiter); // reset token pointer
 		counter++;	// Increase counter
 	}
 }
@@ -163,18 +178,8 @@ void update_playground(int counter, char playground[8][8], char figure, char old
 	/*
 	Function updates the playground-array.
 	*/
-	char fig;	
 
-	if (figure != 'T' && figure != 'S' && figure != 'L' && figure != 'K' && figure != 'D') { //  In no figure is given by the command 
-		if (counter % 2 == 1) fig = 'B';	//If counter is even -> uppercase B 
-		else fig = 'b';	//If counter is odd -> b
-		
-	}
-	else {										// If figure is given by command
-		if (counter % 2 == 1) fig = figure;
-		else fig = figure + 32;		// If counter is odd -> get small character by adding 32 to the ascii value
-	}
-	playground[(int)new_y - 49][mapping(new_x)] = fig;	// Get the current figure of the start-position (-49 because Number is a character and has to be converted to int)
+	playground[(int)new_y - 49][mapping(new_x)] = figure;	// Get the current figure of the start-position (-49 because Number is a character and has to be converted to int)
 
 	if ((mapping(old_x) % 2 == 0 && ((int)old_y - 49) % 2 == 0) || (mapping(old_x) % 2 == 1 && ((int)old_y - 49) % 2 == 1)) { // check the pattern
 		playground[(int)old_y - 49][mapping(old_x)] = ' ';
@@ -190,7 +195,7 @@ int mapping(char input) {
 	Function maps the characters a to h to its corresponding numbers
 	*/
 	
-	int v;
+	int v = 0;	// ?
 
 	switch (input)
 	{
@@ -253,7 +258,7 @@ void play_input(char playground[8][8]) {
 		y = mapping(old_value[0]);	// Get y value by mapping the character to its number
 		
 		fig = playground[x][y];		//get selected figure
-
+		printf("\Fig:%c\n",fig); // debug
 		update_playground(counter, playground, fig, old_value[0], old_value[1], new_value[0], new_value[1]); // update playground
 
 		print_playground(playground);	// print playground
