@@ -1,8 +1,8 @@
 /*
 PRP2-1 Aufgabe 1.2
 
-Name: Malte Müller
-Datum: 17.10.2018
+Name: Malte Müller, Fabian Liebold
+Date: 18.10.2018
 */
 
 #define _CRT_SECURE_NO_WARNINGS
@@ -195,7 +195,7 @@ int mapping(char input) {
 	Function maps the characters a to h to its corresponding numbers
 	*/
 	
-	int v = 0;	// ?
+	int v = 0;	
 
 	switch (input)
 	{
