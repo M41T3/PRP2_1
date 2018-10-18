@@ -7,17 +7,19 @@ Date: 18.10.2018
 
 #define _CRT_SECURE_NO_WARNINGS
 #define MAX 100		//define max lenght of command string
+#define SIZE 8 // length and width of playground
 
 #include <stdio.h>
 #include <string.h>
 
 // Prototypes:
-void init_playground(char playground[8][8]);
-void print_playground(char playground[8][8]);
-void play_str(char playground[8][8], char partie_copy[MAX]);
-void update_playground(int counter, char playground[8][8], char figure, char old_x, char old_y, char new_x, char new_y);
+void init_playground(char playground[SIZE][SIZE]);
+void print_playground(char playground[SIZE][SIZE]);
+void play_str(char playground[SIZE][SIZE], char partie_copy[MAX]);
+void update_playground(int counter, char playground[SIZE][SIZE], char figure, 
+	char old_x, char old_y, char new_x, char new_y);
 int mapping(char input);
-void play_input(char playground[8][8]);
+void play_input(char playground[SIZE][SIZE]);
 
 int main(void) {
 	
@@ -34,7 +36,7 @@ int main(void) {
 
 
 	//Initialize playground array and print it to console
-	char playground[8][8];
+	char playground[SIZE][SIZE];
 	init_playground(playground);
 	print_playground(playground);
 
@@ -51,21 +53,18 @@ int main(void) {
 	return 1;
 }
 
-// ---------------------------------------------------------------------------------------------------------------
+/**************************************************************************************************
+Function initializes playground array.
 
-void init_playground(char playground[8][8]) {
-	/*
-		Function initializes playground array:
+Parameters: 
+	char playground[SIZE][SIZE]
+Returns:
+	void.
+*/
+void init_playground(char playground[SIZE][SIZE]) {
+	
 		
-	  { { 'T','S','L','K','D','L','S','T' },
-		{ 'B','B','B','B','B','B','B','B' },
-		{ ' ',177,' ',177,' ',177,' ',177 },
-		{ 177,' ',177,' ',177,' ',177,' ' },
-		{ ' ',177,' ',177,' ',177,' ',177 },
-		{ 177,' ',177,' ',177,' ',177,' ' },
-		{ 't','s','l','k','d','l','s','t' },
-		{ 'b','b','b','b','b','b','b','b' } };
-	*/
+	
 	
 	playground[0][0] = 'T';
 	playground[0][1] = 'S';
@@ -85,17 +84,17 @@ void init_playground(char playground[8][8]) {
 	playground[7][6] = 's';
 	playground[7][7] = 't';
 
-	for (int i = 0; i < 8; i++) {
+	for (int i = 0; i < SIZE; i++) {
 		playground[1][i] = 'B';
 	}
 
-	for (int i = 0; i < 8; i++) {
+	for (int i = 0; i < SIZE; i++) {
 		playground[6][i] = 'b';
 	}
 
 
 	for (int i = 2; i < 6; i++) {
-		for (int j = 0; j < 8; j++) {
+		for (int j = 0; j < SIZE; j++) {
 			if ((i % 2 == 0 && j % 2 == 0)|| i % 2 == 1 && j % 2 == 1) {
 				playground[i][j] = ' ';
 			}
@@ -104,30 +103,37 @@ void init_playground(char playground[8][8]) {
 	}
 }
 
-// ---------------------------------------------------------------------------------------------------------------
+/**************************************************************************************************
+Function prints the playground to the console.
 
-void print_playground(char playground[8][8]) {
-	/*
-	Function prints the playground to the console.
-	*/
+Parameters:
+	char playground[SIZE][SIZE]
+Returns:
+	void.
+*/
+void print_playground(char playground[SIZE][SIZE]) {
 	
 	printf("\nSpielbrett\n    |\n");
 	for (int i = 7; i >= 0; i--) {
-		printf("  %i | %c %c %c %c %c %c %c %c \n",i+1, playground[i][0], playground[i][1], playground[i][2], playground[i][3], playground[i][4], playground[i][5], playground[i][6], playground[i][7]);
+		printf("  %i | %c %c %c %c %c %c %c %c \n",i+1, playground[i][0], playground[i][1], playground[i][2], 
+			playground[i][3], playground[i][4], playground[i][5], playground[i][6], playground[i][7]);
 	}
 	printf("----+----------------\n    | a b c d e f g h\n\n");
 }
 
-// ---------------------------------------------------------------------------------------------------------------
+/**************************************************************************************************
+Function, which handles the commands of the given string.
 
-void play_str(char playground[8][8], char partie_copy[MAX]) {
-	/*
-	Function, which handles the commands of the given string.
-	*/
-
+Parameters:
+	char playground[SIZE][SIZE]
+	char partie_copy[MAX] - given command string.
+Returns:
+	void.
+*/
+void play_str(char playground[SIZE][SIZE], char partie_copy[MAX]) {
 
 	char delimiter[] = "/";	// set delimiter
-	char* token_ptr = strtok(partie_copy, delimiter);		// Create pointer, which points on the beginning of each word https://tech.io/playgrounds/14213/how-to-play-with-strings-in-c/string-split
+	char* token_ptr = strtok(partie_copy, delimiter);	// Create pointer, which points on the beginning of each word
 	char fig = ' ';
 
 	int counter = 1;
@@ -172,24 +178,42 @@ void play_str(char playground[8][8], char partie_copy[MAX]) {
 	}
 }
 
-// ---------------------------------------------------------------------------------------------------------------
+/**************************************************************************************************
+Function updates the playground-array.
 
-void update_playground(int counter, char playground[8][8], char figure, char old_x, char old_y, char new_x, char new_y) {
-	/*
-	Function updates the playground-array.
-	*/
+Parameters:
+	int counter - counts turns.
+	char playground[SIZE][SIZE]
+	char figure - figure, which schould be moved.
+	char old_x - start position.
+	char old_y
+	char new_x - destination postion.
+	char new_y
+Returns:
+	void.
+*/
+void update_playground(int counter, char playground[SIZE][SIZE], char figure, 
+	char old_x, char old_y, char new_x, char new_y) {
 
-	playground[(int)new_y - 49][mapping(new_x)] = figure;	// Get the current figure of the start-position (-49 because Number is a character and has to be converted to int)
+	playground[(int)new_y - 49][mapping(new_x)] = figure;	// Get the current figure of the start-position 
+											//(-49 because Number is a character and has to be converted to int)
 
-	if ((mapping(old_x) % 2 == 0 && ((int)old_y - 49) % 2 == 0) || (mapping(old_x) % 2 == 1 && ((int)old_y - 49) % 2 == 1)) { // check the pattern
+	if ((mapping(old_x) % 2 == 0 && ((int)old_y - 49) % 2 == 0) || 
+		(mapping(old_x) % 2 == 1 && ((int)old_y - 49) % 2 == 1)) { // check the pattern
 		playground[(int)old_y - 49][mapping(old_x)] = ' ';
 	}
 	else playground[(int)old_y - 49][mapping(old_x)] = 177;
 
 }
 
-// ---------------------------------------------------------------------------------------------------------------
+/**************************************************************************************************
+Function, which handles the commands of the given string.
 
+Parameters:
+	char input - character, which should be mapped to corresponding int.
+Returns:
+	int - corresponding int.
+*/
 int mapping(char input) {
 	/*
 	Function maps the characters a to h to its corresponding numbers
@@ -231,9 +255,15 @@ int mapping(char input) {
 
 }
 
-// ---------------------------------------------------------------------------------------------------------------
+/**************************************************************************************************
+Fuction handles user input.
 
-void play_input(char playground[8][8]) {
+Parameters:
+	char playground[SIZE][SIZE]
+Returns:
+	void.
+*/
+void play_input(char playground[SIZE][SIZE]) {
 	/*
 	Fuction handles user input.
 	*/
@@ -254,12 +284,13 @@ void play_input(char playground[8][8]) {
 		printf("Eingabe Zielfeld [SpalteZeile]: ");
 		scanf("%s", new_value);
 
-		x = (int)old_value[1] - 49;	// Get x value by converting the character to int and substract 49 from the ascii value
+		x = (int)old_value[1] - 49;	// Get x value by converting the character to int and substract 49 from ascii value
 		y = mapping(old_value[0]);	// Get y value by mapping the character to its number
 		
 		fig = playground[x][y];		//get selected figure
 		
-		update_playground(counter, playground, fig, old_value[0], old_value[1], new_value[0], new_value[1]); // update playground
+		update_playground(counter, playground, fig, old_value[0], 
+			old_value[1], new_value[0], new_value[1]); // update playground
 
 		print_playground(playground);	// print playground
 
