@@ -1,0 +1,125 @@
+% 20180310 V0.9 
+% USE XELATEX: Tools->Befehle->XELATEX cause of Calibri font -> F2
+
+\documentclass[12pt]{scrreprt}
+
+\usepackage{amsmath}    % need for subequations
+\usepackage{graphicx}   % need for figures
+\usepackage{verbatim}   % useful for program listings
+\usepackage{color}      % use if color is used in text
+\usepackage{subfigure}  % use for side-by-side figures
+\usepackage{hyperref}   % use for hypertext links, including those to external documents and URLs
+\usepackage[german]{babel}
+%\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{fontspec}
+\setmainfont{Calibri} 
+\usepackage{lastpage}
+\usepackage{slashed}
+\usepackage[
+headheight=62pt,
+%textheight=600pt,
+textwidth=470pt,
+%footskip=30pt,
+paperwidth=597pt,
+footskip=40pt,
+bottom=80pt,
+% other options
+]{geometry}
+
+
+%Definieren uns farbigen Quellcode
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+
+%Damit wir Quellcode nutzen können.
+\usepackage{listings}
+\lstset{numbers=left,
+	numberstyle=\scriptsize,
+	numbersep=8pt,
+	breaklines=true,
+	showstringspaces=false,
+	frame=0,
+	xleftmargin=15pt,
+	xrightmargin=5pt,
+	basicstyle=\ttfamily\scriptsize,
+	stepnumber=1,
+	keywordstyle=\color{blue},          % keyword style
+	commentstyle=\color{dkgreen},       % comment style
+	stringstyle=\color{mauve}         % string literal style
+}
+%Sprache Festelegen
+\lstset{language=C}
+
+%\pagestyle{fancy}
+
+\fancypagestyle{plain}{}
+
+\fancyhf{}
+\lhead{\includegraphics[height=1.5cm]{img/HAW_Logo_TI.png}}
+\chead{PRP2-1}
+\rhead{\today}
+
+\cfoot{\thepage \, / \pageref{LastPage}}
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\headrulewidth}{0.4pt}
+
+
+
+\begin{document}
+
+\parindent 0pt %kein Texteinzug bei Paragraphen
+
+\begin{titlepage}
+	
+	\centering
+	\begin{figure}
+		\vspace*{0cm}	
+	\end{figure}
+	
+	\includegraphics[width=14cm]{img/haw_logo.jpg}\par
+	\vspace{3cm}
+	
+	{\huge\bfseries Praktikumsbericht zum 1. Praktikum?\par}
+
+	\vspace{0.5cm}
+
+	{\LARGE Programmieren 2 Praktikum?\par}
+	
+	\vspace{1.5cm}
+	
+	{\Large \bfseries Malte Müller, Fabian Liebold?\par}
+	
+	\vspace{1.5cm}
+
+	{\large \today\par}
+
+	\vspace{5cm}
+
+	\begin{tabular}{lr}
+		\rule[-1ex]{0pt}{2.5ex} \textbf{Name} \hspace{2cm} & \textbf{Matrikelnummer }\\  
+		\rule[-1ex]{0pt}{2.5ex} Fabian Liebold? & XXXXXXX \\ 
+		\rule[-1ex]{0pt}{2.5ex} Malte Müller  & 2358749 \\ 	
+	\end{tabular} 
+	\vfill
+	{PRP2-1 - E2B - LND} 
+	
+
+		
+	
+\end{titlepage}
+\thispagestyle{fancy}
+%\tableofcontents
+\thispagestyle{fancy}
+
+
+
+\include{001_PRP2_1_Aufgabe_1}
+\include{002_PRP2_1_Aufgabe_2}
+
+% include sections like this
+
+
+\end{document}

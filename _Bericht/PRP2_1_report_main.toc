@@ -1,0 +1,4 @@
+\babel@toc {german}{}
+\contentsline {chapter}{\numberline {1}I-U-Kennlinie einer Glühlampe}{4}{chapter.1}
+\contentsline {section}{\numberline {1.1}Vorbereitung}{4}{section.1.1}
+\contentsline {subsection}{\numberline {1.1.1}Berechnung}{4}{subsection.1.1.1}

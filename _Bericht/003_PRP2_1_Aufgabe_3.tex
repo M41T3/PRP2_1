@@ -1,0 +1,145 @@
+\chapter{ I-U-Kennlinie einer Glühlampe}
+
+
+\section{Vorbereitung}
+	\subsection{Berechnung}
+	
+	Zur Vorbereitung wurde der Glühlampenstrom bei unterschiedlichen Spannungen \\($U = 0,1V, 0,5V, 0,8V, 2,0V, 5,0V \text{ und } 6,0V$) gemessen und in folgende Tabelle eingetragen. \textcolor{gray}{\textit{(1.1.1)}}
+	
+	\begin{equation*}
+		\frac{I}{mA} = a*(\frac{U}{V})^b \text{ mit } a \approx 40 \text{ und } b \approx 0,5
+	\end{equation*}
+	\hspace{0.5cm}
+	\begin{center}
+	\begin{tabular}{|c|c|c|c|c|c|c|}
+		\hline 
+		\textbf{U}& 0,1V & 0,5V & 0,8V & 2,0V & 5,0V & 6,0V  \\ 
+		\hline 
+		\textbf{I}& 12,65mA & 28,28mA & 35,78mA & 56,57mA & 89,44mA & 97,98mA \\ 
+		\hline 
+	\end{tabular} 
+\end{center}
+
+\hspace{0.5cm}
+
+Mit den berechneten Werten wurde ein Kennliniendiagramm erstellt, mit dem die bevorstehenden Messungen verglichen werden. \textcolor{gray}{\textit{(1.1.2)}}
+
+\begin{center}
+	\includegraphics[width=15cm]{matlab/1-1-2.eps}
+\end{center}
+
+\newpage
+\thispagestyle{fancy}
+In einem doppelt-logarithmischen Maßstab kann die Kennlinie als Gerade dargestellt werden. Dies ist besonders für die Berechnung der Steigung der Kennlinie sinnvoll. Die Umformung des Maßstabs bewirkt eine Umformung der Ausgangsformel:
+
+\begin{equation*}
+\frac{I}{mA} = a*(\frac{U}{V})^b \rightarrow \log(\frac{I}{mA}) = \log a+ b * \log(\frac{U}{V})
+\end{equation*}
+
+Man erkennt, dass die Steigung $b$ mit der Formel $b = \frac{\varDelta y}{\varDelta x}  $ berechnet werden kann. \textcolor{gray}{\textit{(1.1.3)}}
+
+\begin{equation*}
+b = \frac{\varDelta y}{\varDelta x} = \frac{\log(36,0)-\log(28,5)}{\log(0,8)-\log(0,5)} = 0,497
+\end{equation*}
+
+Der logarithmische Achsenabschnitt $a$ kann an dem Schnittpunkt der Ordinate und der Funktion abgelesen werden:  $a = \log(y_0) = 40$.
+
+
+
+\begin{center}
+	\includegraphics[width=15cm]{matlab/1-1-3.eps}
+\end{center}
+	
+\section{Messungen}
+
+
+
+
+	\subsection{Durchführung}
+	
+	An der Glühlampe wird eine spannungsrichtige Messung durchgeführt, indem die Strommessung vor der Spannungsmessung ausgeführt wird (siehe Abbildung). Somit ist sichergestellt, dass der Strom, welcher mit einer kleinen Toleranz gemessen wird, zu einem richtigen Spannungswert zugeordnet werden kann. Es wurden insgesamt 13 Messungen mit zwei MetraHit 29S Multimetern durchgeführt mit einer Schrittweite von circa $0,5V$. Die Schaltung wird mit dem Netzgerät HM7042-5 mit Strom versorgt.
+	
+	\newpage
+	\thispagestyle{fancy}
+	
+	\begin{center}
+		\includegraphics[width=7cm]{ltspice/gluehlampe.png}
+	\end{center}
+	
+	\subsection{Erwartungen}
+	
+	Man erwartet, dass sich die gemessene I-U-Kennlinie sehr der in der Vorbereitung berechneten Kennlinie ähnelt. Durch die spannungsrichtige Messung werden positiv abweichende Stromwerte erwartet. 
+
+	\subsection{Ergebnis}
+
+	Die Ergebnisse sind in der folgenden Tabelle aufgeführt und in das theoretische Kennliniendiagramm der Glühlampe eingetragen. Die blauen Markierungen sind hierbei die gemessenen Werte. \textcolor{gray}{\textit{(1.2.1)}}\\
+	
+		\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+			\hline 
+			\textbf{U/V}& 0,01 & 5,0 & 1,0 & 1,5 & 2,0 & 2,5 & 3,0 & 3,5 & 4,0 & 4,5 & 5,0 & 5,5 & 6,0 \\  
+			\hline 
+			\textbf{I/mA}& 1,97 & 29,1 & 40,7 & 50,2 & 58,8 & 66,5 & 73,6 & 80,4 & 85,5 & 91,8 & 97,4 &102,8  & 107,7 \\
+			\hline 
+		\end{tabular}
+
+	
+	\begin{center}
+		\includegraphics[width=15cm]{matlab/1-2-3.eps}
+	\end{center}
+	\textcolor{gray}{\textit{(1.2.2)}}
+\newpage
+\thispagestyle{fancy}
+
+	Anhand der Messungen kann der  Gleichstromwiderstands $R_A$ und der differentiellen Widerstands $r_d$ berechnet werden: \textcolor{gray}{\textit{(1.2.3)}}
+	\vspace{0.5cm}
+	\begin{equation*}
+	R_A = \frac{U_{AP}}{I_{AP}} \text{  und  } r_d = \frac{\varDelta U}{\varDelta I}
+	\end{equation*}
+	\vspace{0.5cm}
+	\begin{center}
+
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		\textbf{$U$}&  \textbf{0,5V} & \textbf{2,0V} &\textbf{ 5,0V}  \\ 
+		\hline 
+		\textbf{$I$}& 29,1mA & 58,8mA & 97,4mA \\ 
+		\hline 
+		\textbf{$R_A$}& 17,18$\Omega$ & 34,0$1\Omega$ & 51,33$\Omega$  \\ 
+		\hline 
+		\textbf{$r_d$}& 25,79$\Omega$ & 61,34$\Omega$ & 90,9$\Omega$  \\ 
+		\hline 
+	\end{tabular} 
+	
+	\end{center}
+	Das folgende Kennliniendiagramm zeigt die theoretischen und gemessenen Werte und eine Ausgleichsgerade in der doppelt-logarithmischen Darstellung. \textcolor{gray}{\textit{(1.2.4)}}
+	\begin{center}
+		\includegraphics[width=15cm]{matlab/1-2-4.eps}
+	\end{center}
+	
+	Anhand der Ausgleichsgerade können die Parameter $a$ und $b$ bestimmt werden. \textcolor{gray}{\textit{(1.2.5)}}
+	
+	\begin{equation*}
+		\log(\frac{I}{mA}) = \log a+ b * \log(\frac{U}{V})
+	\end{equation*}
+
+	\begin{equation*}
+	a \approx 38,0 \text{ und } b = \frac{\varDelta I}{\varDelta U} = \frac{\log(107,7)-\log(102,8)}{\log(6,0)-\log(5,5)} \approx 0,54
+	\end{equation*}
+	\newpage
+	\thispagestyle{fancy}
+	Ab ungefähr 60mA verhält sich die Kennlinie annähernd linear. Eine Ersatzzweipolquelle für den linearen Bereich kann somit konstruiert werden. \textcolor{gray}{\textit{(1.2.6)}}
+	
+	\begin{equation*}
+	R_i = \frac{U}{I} = \frac{5,5V}{102,8mA} = 53,5\Omega 
+	\end{equation*}
+	
+	\begin{center}
+		\includegraphics[width=4cm]{ltspice/ersatz_gluehlampe.png}
+	\end{center}
+	
+	\subsection{Auswertung}
+	
+	Die Messwerte liegen sehr nah an den theoretischen Werten und entsprechen der Erwartung. Aufgrund der spannungrichtigen Messung kommt es zu einem höher gemessenen Strom. Die Abweichung nimmt bei steigender Spannung zu. Auffällig ist, dass die Kennlinie ab ungefähr 60mA annähernd linear verläuft. Bei ganz kleinen Strömen (0,1 mA) verhält sich diese besonders nonlinear.
+	
+
+
