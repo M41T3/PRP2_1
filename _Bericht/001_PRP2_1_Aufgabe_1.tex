@@ -52,30 +52,30 @@ Zeichnen Sie graphisch die Zeigerabhängigkeiten auf.\\
 \begin{lstlisting}
 wert = (p == i);
 \end{lstlisting}
-Wert ist = 0. Da bei p nicht der Wert, sondern die Adresse betrachtet wird sind nicht beide echt gleich.
+Wert ist 0. Da bei p nicht der Wert, sondern die Adresse betrachtet wird sind nicht beide echt gleich.
 \begin{lstlisting}
 wert = *p / *q;
 \end{lstlisting}
-Hier wird 3/5 gerechnet und nur in ganzen Zahlen dargestellt, was hier 0 ist. Falls kein Leerzeichen zwischen / und *p steht denkt das Programm, es wird auskommentiert
+Hier wird 3/5 gerechnet und nur in ganzen Zahlen dargestellt, was hier 0 ist. Falls kein Leerzeichen zwischen / und *p steht, denkt das Programm, es wird auskommentiert
 \begin{lstlisting}
 wert = *p / *q + 3;
 \end{lstlisting}
-Hier wird zu dem Ergebnis 3 von eben eine 3 hinzuaddiert, deshalb ist das Resultat 3.
+Hier wird zu dem Ergebnis 0 von der letzten Berechnung eine 3 hinzuaddiert, deshalb ist das Resultat 3.
 \begin{lstlisting}
 wert = **&p;
 \end{lstlisting}
-Wert ist = 3. Da der Wert hinter der Adresse auf die **p zeigt dargestellt wird.
+Wert ist 3. Da der Wert hinter der Adresse, auf die **p zeigt, dargestellt wird.
 \begin{lstlisting}
 wert = *(r = &k);
 \end{lstlisting}
-Wert ist = 6. r wird auf die Adresse von k gesetzt und dann als Pointer zeigt r auf die Adresse von k mit dem Wert 6.
+Wert ist 6. r wird auf die Adresse von k gesetzt und als Pointer zeigt r auf die Adresse von k mit dem Wert 6.
 \begin{lstlisting}
 wert = *(r = &k) = *p**q;
 \end{lstlisting}
-Wert ist = 15. Zuerst wird *r auf die Adresse von k gerichtet, dann wird die Adresse von k auf den Wert 15 (von 3(p)*5(q)) gesetzt und am Ende wir „wert“ diesem Wert gleichgesetzt.
+Wert ist 15. Zuerst wird *r auf die Adresse von k gerichtet, dann wird die Adresse von k auf den Wert 15 (von 3(p)*5(q)) gesetzt und am Ende wir „wert“ diesem Wert gleichgesetzt.
 \begin{lstlisting}
 wert = *p***pp;
 \end{lstlisting}
-Wert ist = 9. Der Wert auf den p zeigt, wird mit dem Wert auf den q zeigt multipliziert und auf „wert“ gespeichert.
+Wert ist 9. Der Wert auf den p zeigt, wird mit dem Wert auf den q zeigt multipliziert und auf „wert“ gespeichert.
 
 
